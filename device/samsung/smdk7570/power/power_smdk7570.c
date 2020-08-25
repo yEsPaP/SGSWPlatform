@@ -13,28 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-#include <dirent.h>
 #include <errno.h>
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-#include <unistd.h>
-//#define LOG_NDEBUG 0
-
 #define LOG_TAG "UNIVERSAL7870_PowerHAL"
 #include <utils/Log.h>
-
 #include <hardware/hardware.h>
 #include <hardware/power.h>
-
-struct smdk7570_power_module {
-    struct power_module base;
-    pthread_mutex_t lock;
-    int boostpulse_fd;
-    int boostpulse_warned;
-};
+// We only support clang and g++.
+#define UNUSED_ARGUMENT __attribute((unused))
 
 static void sysfs_write(const char *path, char *s)
 {
@@ -59,9 +48,6 @@ static void sysfs_write(const char *path, char *s)
 
 static void power_init(struct power_module *module)
 {
-    struct smdk7570_power_module *smdk7570 = (struct smdk7570_power_module *) module;
-    struct dirent **namelist;
-    int n;
 
     /*
      * called when system initialize
@@ -84,27 +70,32 @@ static void power_init(struct power_module *module)
   sysfs_write("/sys/devices/system/cpu/cpu4/cpufreq/interactive/above_hispeed_delay", "39000 1248000:19000");
   sysfs_write("/sys/devices/system/cpu/cpu4/cpufreq/interactive/boostpulse_duration", "40000");
 }
-
+static void power_set_interactive(struct power_module *module UNUSED_ARGUMENT,
+                                  int on UNUSED_ARGUMENT)
+{
+}
+static void power_hint(struct power_module *module UNUSED_ARGUMENT,
+                       power_hint_t hint,
+                       void *data UNUSED_ARGUMENT) {
+    switch (hint) {
+    default:
+        break;
+    }
+}
 static struct hw_module_methods_t power_module_methods = {
     .open = NULL,
 };
-
-struct smdk7570_power_module HAL_MODULE_INFO_SYM = {
-    base: {
-        common: {
-            tag: HARDWARE_MODULE_TAG,
-            module_api_version: POWER_MODULE_API_VERSION_0_2,
-            hal_api_version: HARDWARE_HAL_API_VERSION,
-            id: POWER_HARDWARE_MODULE_ID,
-            name: "UNIVERSAL7870 Power HAL",
-            author: "The Android Open Source Project",
-            methods: &power_module_methods,
-        },
-
-        init: power_init,
+struct power_module HAL_MODULE_INFO_SYM = {
+    .common = {
+        .tag = HARDWARE_MODULE_TAG,
+        .module_api_version = POWER_MODULE_API_VERSION_0_2,
+        .hal_api_version = HARDWARE_HAL_API_VERSION,
+        .id = POWER_HARDWARE_MODULE_ID,
+        .name = "UNIVERSAL7870 Power HAL",
+        .author = "The Android Open Source Project",
+        .methods = &power_module_methods,
     },
-
-    lock: PTHREAD_MUTEX_INITIALIZER,
-    boostpulse_fd: -1,
-    boostpulse_warned: 0,
+    .init = power_init,
+    .setInteractive = power_set_interactive,
+    .powerHint = power_hint,
 };
