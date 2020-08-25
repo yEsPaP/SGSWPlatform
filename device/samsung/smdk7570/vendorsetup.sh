@@ -14,4 +14,4 @@
 # limitations under the License.
 #
 
-add_lunch_combo full_smdk7570-eng
+add_lunch_combo full_j7xelte-eng
