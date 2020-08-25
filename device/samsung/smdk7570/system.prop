@@ -1,9 +1,22 @@
 #
-# system.prop for smdk7570
+# system.prop for universal7870
 #
-
-ro.arch=exynos7570
-#ro.kernel.qemu=1
-#ro.kernel.qemu.gles=1
+ro.arch=exynos7870
+ro.sf.lcd_density=280
+ro.kernel.qemu=0
+ro.kernel.qemu.gles=1
 persist.demo.hdmirotationlock=false
+#Eed DS/SS property
+import /efs/factory.prop
+#Enable S.LSI USB settings
+dev.usbsetting.embedded=on
+#RILD debug level setting
+ro.debug_level=0x494d
+# Specify a vendor RIL and a device node
+rild.libpath=/system/lib64/libsec-ril.so
+rild.libargs=-d /dev/umts_ipc0
+# GPU WFD support
+ro.vendor.wfdsupport=1
+#Enable CSC for vendor image
+ro.vendor.cscsupported=1
 
