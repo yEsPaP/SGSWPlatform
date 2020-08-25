@@ -85,25 +85,6 @@ static void power_init(struct power_module *module)
   sysfs_write("/sys/devices/system/cpu/cpu4/cpufreq/interactive/boostpulse_duration", "40000");
 }
 
-static void smdk7570_power_hint(struct power_module *module, power_hint_t hint,
-                             void *data)
-{
-    struct smdk7570_power_module *smdk7570 = (struct smdk7570_power_module *) module;
-    char buf[80];
-    int len;
-
-    switch (hint) {
-    case POWER_HINT_INTERACTION:
-        break;
-
-    case POWER_HINT_VSYNC:
-        break;
-
-    default:
-            break;
-    }
-}
-
 static struct hw_module_methods_t power_module_methods = {
     .open = NULL,
 };
@@ -121,7 +102,6 @@ struct smdk7570_power_module HAL_MODULE_INFO_SYM = {
         },
 
         init: power_init,
-        powerHint: smdk7570_power_hint,
     },
 
     lock: PTHREAD_MUTEX_INITIALIZER,
