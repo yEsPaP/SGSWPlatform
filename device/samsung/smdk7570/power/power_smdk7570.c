@@ -85,21 +85,6 @@ static void power_init(struct power_module *module)
   sysfs_write("/sys/devices/system/cpu/cpu4/cpufreq/interactive/boostpulse_duration", "40000");
 }
 
-static void power_set_interactive(struct power_module *module, int on)
-{
-    struct smdk7570_power_module *smdk7570 = (struct smdk7570_power_module *) module;
-    char buf[80];
-    int ret;
-
-    ALOGV("power_set_interactive: %d\n", on);
-
-    /*
-     * called when screen is on/off.
-     */
-
-    ALOGV("power_set_interactive: %d done\n", on);
-}
-
 static void smdk7570_power_hint(struct power_module *module, power_hint_t hint,
                              void *data)
 {
@@ -136,7 +121,6 @@ struct smdk7570_power_module HAL_MODULE_INFO_SYM = {
         },
 
         init: power_init,
-        setInteractive: power_set_interactive,
         powerHint: smdk7570_power_hint,
     },
 
