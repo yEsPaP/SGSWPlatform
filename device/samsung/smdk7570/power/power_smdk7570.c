@@ -23,7 +23,7 @@
 #include <unistd.h>
 //#define LOG_NDEBUG 0
 
-#define LOG_TAG "SMDK7570PowerHAL"
+#define LOG_TAG "UNIVERSAL7870_PowerHAL"
 #include <utils/Log.h>
 
 #include <hardware/hardware.h>
@@ -67,22 +67,22 @@ static void power_init(struct power_module *module)
      * called when system initialize
      */
 
-    sysfs_write("/sys/devices/system/cpu/cpu0/cpufreq/interactive/target_loads",
-                "75 1144000:85 1482000:95");
-    sysfs_write("/sys/devices/system/cpu/cpu0/cpufreq/interactive/min_sample_time",
-                "40000");
-    sysfs_write("/sys/devices/system/cpu/cpu0/cpufreq/interactive/hispeed_freq",
-                "829000");
-    sysfs_write("/sys/devices/system/cpu/cpu0/cpufreq/interactive/go_hispeed_load",
-                "89");
-    sysfs_write("/sys/devices/system/cpu/cpu0/cpufreq/interactive/above_hispeed_delay",
-                "39000 1144000:19000");
-    sysfs_write("/sys/devices/system/cpu/cpu0/cpufreq/interactive/timer_rate",
-                "20000");
-    sysfs_write("/sys/devices/system/cpu/cpu0/cpufreq/interactive/timer_slack",
-                "20000");
-    sysfs_write("/sys/devices/system/cpu/cpu0/cpufreq/interactive/boostpulse_duration",
-                "40000");
+  sysfs_write("/sys/devices/system/cpu/cpu0/cpufreq/interactive/timer_rate", "20000");
+  sysfs_write("/sys/devices/system/cpu/cpu0/cpufreq/interactive/timer_slack", "20000");
+  sysfs_write("/sys/devices/system/cpu/cpu0/cpufreq/interactive/min_sample_time", "40000");
+  sysfs_write("/sys/devices/system/cpu/cpu0/cpufreq/interactive/hispeed_freq", "902000");
+  sysfs_write("/sys/devices/system/cpu/cpu0/cpufreq/interactive/go_hispeed_load", "89");
+  sysfs_write("/sys/devices/system/cpu/cpu0/cpufreq/interactive/target_loads", "75 1248000:85");
+  sysfs_write("/sys/devices/system/cpu/cpu0/cpufreq/interactive/above_hispeed_delay", "39000 1248000:19000");
+  sysfs_write("/sys/devices/system/cpu/cpu0/cpufreq/interactive/boostpulse_duration", "40000");
+  sysfs_write("/sys/devices/system/cpu/cpu4/cpufreq/interactive/timer_rate", "20000");
+  sysfs_write("/sys/devices/system/cpu/cpu4/cpufreq/interactive/timer_slack", "20000");
+  sysfs_write("/sys/devices/system/cpu/cpu4/cpufreq/interactive/min_sample_time", "40000");
+  sysfs_write("/sys/devices/system/cpu/cpu4/cpufreq/interactive/hispeed_freq", "902000");
+  sysfs_write("/sys/devices/system/cpu/cpu4/cpufreq/interactive/go_hispeed_load", "89");
+  sysfs_write("/sys/devices/system/cpu/cpu4/cpufreq/interactive/target_loads", "75 1248000:85");
+  sysfs_write("/sys/devices/system/cpu/cpu4/cpufreq/interactive/above_hispeed_delay", "39000 1248000:19000");
+  sysfs_write("/sys/devices/system/cpu/cpu4/cpufreq/interactive/boostpulse_duration", "40000");
 }
 
 static void power_set_interactive(struct power_module *module, int on)
@@ -130,7 +130,7 @@ struct smdk7570_power_module HAL_MODULE_INFO_SYM = {
             module_api_version: POWER_MODULE_API_VERSION_0_2,
             hal_api_version: HARDWARE_HAL_API_VERSION,
             id: POWER_HARDWARE_MODULE_ID,
-            name: "SMDK7570 Power HAL",
+            name: "UNIVERSAL7870 Power HAL",
             author: "The Android Open Source Project",
             methods: &power_module_methods,
         },
